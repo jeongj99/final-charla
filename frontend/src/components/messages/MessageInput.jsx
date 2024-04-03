@@ -4,7 +4,7 @@ import useSendMessage from "../../hooks/useSendMessage";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
-  const { loading, sendMessage } = useSendMessage();
+  const { sendLoading, sendMessage } = useSendMessage();
   const textareaRef = useRef();
 
   const adjustTextareaHeight = () => {
@@ -52,8 +52,8 @@ const MessageInput = () => {
           onChange={e => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3" disabled={loading}>
-          {loading ? <div className="loading loading-spinner" /> : <BsSend />}
+        <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3" disabled={sendLoading}>
+          {sendLoading ? <div className="loading loading-spinner" /> : <BsSend />}
         </button>
       </div>
     </form>
