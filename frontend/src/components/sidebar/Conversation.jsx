@@ -1,8 +1,10 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../store/useConversation";
+import { useAuthContext } from "../../context/AuthContext";
 
-const Conversation = ({ conversation, lastIdx, emoji }) => {
+const Conversation = ({ conversation, lastIdx, lastMessage }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const { authUser } = useAuthContext();
 
   const isSelected = selectedConversation?._id === conversation._id;
   const { onlineUsers } = useSocketContext();
@@ -23,9 +25,9 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
           </div>
         </div>
         <div className="flex flex-col flex-1">
-          <div className="flex gap-3 justify-between">
+          <div className="flex flex-col gap-1 justify-between">
             <p className="font-bold text-gray-200">{conversation.fullName}</p>
-            <span className="text-xl">{emoji}</span>
+            <span className="text-xs">{`${lastMessage.senderId === authUser._id ? "You:" : ""} ${lastMessage.message}`}</span>
           </div>
         </div>
       </div>

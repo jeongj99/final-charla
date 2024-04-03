@@ -12,6 +12,7 @@ const Conversations = () => {
           key={conversation._id}
           conversation={conversation}
           lastIdx={idx === conversations.length - 1}
+          lastMessage={conversation.lastMessage}
         />
       ))}
       {conversationLoading ? <span className="loading loading-spinner mx-auto"></span> : null}
