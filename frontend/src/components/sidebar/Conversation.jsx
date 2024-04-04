@@ -27,7 +27,7 @@ const Conversation = ({ conversation, lastIdx, lastMessage }) => {
         <div className="flex flex-col flex-1">
           <div className="flex flex-col gap-1 justify-between">
             <p className="font-bold text-gray-200">{conversation.fullName}</p>
-            <span className="text-xs">{`${lastMessage.senderId === authUser._id ? "You:" : ""} ${lastMessage.message}`}</span>
+            <span className="text-xs text-gray-200">{`${lastMessage.senderId === authUser._id ? "You:" : ""} ${lastMessage.message}`}</span>
           </div>
         </div>
       </div>

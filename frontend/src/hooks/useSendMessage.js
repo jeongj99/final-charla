@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 const useSendMessage = () => {
   const { messages, setMessages, selectedConversation, conversations, setConversations, sendLoading, setSendLoading } = useConversation();
 
-
   const sendMessage = async message => {
     setSendLoading(true);
     try {
@@ -21,18 +20,26 @@ const useSendMessage = () => {
         throw new Error(data.error);
       }
 
-      // Update messages state with the new message
       setMessages([...messages, data]);
 
-      // Merge new conversations data with existing conversations and sort by most recent
-      const updatedConversations = conversations
-        .map(conversation =>
-          conversation._id === selectedConversation._id ? { ...conversation, lastMessage: data } : conversation
-        )
-        .sort((a, b) => new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt));
+      // Check if the selected conversation already exists in conversations state
+      const existingConversationIndex = conversations.findIndex(conv => conv._id === selectedConversation._id);
+      if (existingConversationIndex !== -1) {
+        // Conversation exists, update lastMessage and sort conversations
+        const updatedConversations = conversations.map((conversation, index) =>
+          index === existingConversationIndex ? { ...conversation, lastMessage: data } : conversation
+        ).sort((a, b) => new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt));
 
-      console.log("Updated conversations:", updatedConversations); // Log updated conversations
-      setConversations(updatedConversations);
+        setConversations(updatedConversations);
+      } else {
+        // Conversation doesn't exist, add it to conversations state
+        const updatedConversations = [
+          ...conversations,
+          { ...selectedConversation, lastMessage: data }
+        ].sort((a, b) => new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt));
+
+        setConversations(updatedConversations);
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
