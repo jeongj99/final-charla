@@ -1,9 +1,10 @@
 import useGetConversations from "../../hooks/useGetConversations";
-
 import Conversation from "./Conversation";
+import useListenMessage from "../../hooks/useListenMessages";
 
 const Conversations = () => {
   const { conversationLoading, conversations } = useGetConversations();
+  useListenMessage();
 
   return (
     <div className="py-2 flex flex-col overflow-auto">

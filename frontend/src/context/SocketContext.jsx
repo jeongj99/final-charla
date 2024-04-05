@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://charla-y0ks.onrender.com", {
+      const socket = io(import.meta.env.VITE_SOCKET_CLIENT_URL, {
         query: {
           userId: authUser._id,
         },
@@ -26,7 +26,6 @@ export const SocketContextProvider = ({ children }) => {
 
       // socket.on() is used to listen to the events. can be used both on client and server side
       socket.on("getOnlineUsers", users => {
-        console.log(users);
         setOnlineUsers(users);
       });
 

@@ -21,17 +21,14 @@ const useListenMessages = () => {
         setConversations([myInfo, ...conversations]);
       }
 
-      console.log(selectedConversation._id);
-      console.log(newMessage.receiverId);
-
-      if (selectedConversation._id === newMessage.senderId)
+      if (selectedConversation && selectedConversation._id === newMessage.senderId)
         setMessages([...messages, newMessage]);
     });
 
     return () => {
-      socket.off("newMessage");
+      socket?.off("newMessage");
     };
-  }, [socket, setMessages, messages, setConversations, conversations, selectedConversation._id]);
+  }, [socket, setMessages, messages, setConversations, conversations, selectedConversation]);
 };
 
 export default useListenMessages;
