@@ -22,17 +22,14 @@ const useSendMessage = () => {
 
       setMessages([...messages, data]);
 
-      // Check if the selected conversation already exists in conversations state
       const existingConversationIndex = conversations.findIndex(conv => conv._id === selectedConversation._id);
       if (existingConversationIndex !== -1) {
-        // Conversation exists, update lastMessage and sort conversations
         const updatedConversations = conversations.map((conversation, index) =>
           index === existingConversationIndex ? { ...conversation, lastMessage: data } : conversation
         ).sort((a, b) => new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt));
 
         setConversations(updatedConversations);
       } else {
-        // Conversation doesn't exist, add it to conversations state
         const updatedConversations = [
           ...conversations,
           { ...selectedConversation, lastMessage: data }
