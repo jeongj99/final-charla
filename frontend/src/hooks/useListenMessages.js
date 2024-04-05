@@ -21,7 +21,10 @@ const useListenMessages = () => {
         setConversations([myInfo, ...conversations]);
       }
 
-      if (selectedConversation._id === newMessage.receiverId)
+      console.log(selectedConversation._id);
+      console.log(newMessage.receiverId);
+
+      if (selectedConversation._id === newMessage.senderId)
         setMessages([...messages, newMessage]);
     });
 
